@@ -1,0 +1,6 @@
+DELETE FROM `user` WHERE `user` = '';
+UPDATE `mysql`.`user` SET `password` = PASSWORD('rootpassword') WHERE `user` = 'root';
+CREATE DATABASE `joomla`;
+GRANT ALL ON `joomla`.* TO 'jadmin'@'localhost' IDENTIFIED BY 'joomlapassword';
+DROP DATABASE `test`;
+FLUSH PRIVILEGES;
