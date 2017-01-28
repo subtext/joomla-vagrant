@@ -7,13 +7,12 @@ cd /home/vagrant
 cp /vagrant/bootstrap.mysql /vagrant/bootstrap-provision.mysql
 sed -i "s/rootpassword/$PASSWD1/" /vagrant/bootstrap-provision.mysql
 sed -i "s/joomlapassword/$PASSWD2/" /vagrant/bootstrap-provision.mysql
-semanage fcontext -a -t httpd_sys_rw_content_t /var/www/html
-restorcon /var/www/html
 wget --quiet https://github.com/joomla/joomla-cms/releases/download/3.5.1/Joomla_3.5.1-Stable-Full_Package.zip
 mv /home/vagrant/Joomla_3.5.1-Stable-Full_Package.zip /var/www/html/joomla.zip
 cd /var/www/html
 unzip -qq joomla.zip
 chown -R apache:apache /var/www/html
+chcon -R -t httpd_sys_rw_content_t /var/www/html
 systemctl --quiet enable mariadb.service
 systemctl --quiet start mariadb.service
 systemctl --quiet enable httpd.service
