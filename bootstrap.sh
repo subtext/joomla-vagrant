@@ -1,8 +1,13 @@
 #!/usr/bin/bash
 PASSWD1=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 PASSWD2=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+yum -y --quiet install wget emacs
 yum -y --quiet install epel-release
-yum -y --quiet install httpd php php-mysql php-soap php-xml php-gd php-mcrypt mariadb mariadb-server wget unzip policycoreutils-python
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+rpm -Uvh epel-release-latest-7*.rpm
+yum -y --quiet install yum-utils
+yum-config-manager --enable remi-php71
+yum -y --quiet install httpd php php-mysql php-soap php-xml php-gd php-mcrypt mariadb mariadb-server unzip policycoreutils-python
 cd /home/vagrant
 cp /vagrant/bootstrap.mysql /vagrant/bootstrap-provision.mysql
 sed -i "s/rootpassword/$PASSWD1/" /vagrant/bootstrap-provision.mysql
